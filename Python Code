@@ -1,0 +1,26 @@
+# Python Code for iterating through a given directory to find target hashing file path
+
+# importing our library of hashing algorithms
+import hashlib
+from hashlib import md5
+import os
+
+target = "29638606a7ac6ebea40b9be9358b9943"
+directory = '/home/joseph/Downloads/Python_Exercise/suspicious_files/'
+
+#iterate through files in directory
+for filename in os.listdir(directory):
+	file_path = os.path.join(directory, filename)
+	if os.path.isfile(file_path):
+		try:
+			#opening our target file in binary format
+			with open(file_path, 'rb') as afile:
+				# read the selected file 
+				buf = afile.read()
+				 # assigning the hash value to a new varible
+				hash = md5(buf).hexdigest()
+			if hash == target :
+				print("The file: " + file_path + " contains Hash: " + hash + "!")
+				break;
+		except IOError:
+			print("Error opening file, " + filename + " in binary format.")
